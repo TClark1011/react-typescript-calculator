@@ -7,23 +7,69 @@ import CalculatorContext from '../../containers/CalculatorContext';
 import CalculatorButton from '../CalculatorButton';
 
 const Calculator: React.FC = (props) => {
+	const errorMsg: string = 'ERROR';
 	const [calculatorInput, setCalculatorInput] = useState<string>('');
 
 	const [stateQueue, setStateQueue] = useState<string[]>([]);
 
+	const [clearNext, setClearNext] = useState<boolean>(false);
+
+	/**
+	 * Adds a provided state to the state queue as long as the current state is not displaying an error message
+	 * @param {string} state - The state to save, if not provided, defaults to current contents of calculator display
+	 */
+	const addToQueue = (state: string = calculatorInput): void => {
+		if (calculatorInput !== errorMsg) {
+			setStateQueue([...stateQueue, state]);
+		}
+	};
+
+	/**
+	 * Returns the calculator display to the previous state in the state queue
+	 */
 	const revertToPreviousState = (): void => {
 		setCalculatorInput(stateQueue.pop() || '');
 	};
 
+	/**
+	 * Add a given string to the calculator display
+	 * @param {string} newInput - The string to add to the calculator display
+	 */
 	const enterInput = (newInput: string): void => {
-		setCalculatorInput(`${calculatorInput}${newInput}`);
+		if (clearNext) {
+			addToQueue();
+		}
+		const prefix: string = clearNext ? '' : calculatorInput;
+		setCalculatorInput(`${prefix}${newInput}`);
+		setClearNext(false);
 	};
 
+	/**
+	 * Solve the problem currently held in the calculator input
+	 */
 	const performCalculation = (): void => {
-		setStateQueue([...stateQueue, calculatorInput]);
+		addToQueue();
 
-		// eslint-disable-next-line no-eval
-		setCalculatorInput(eval(calculatorInput));
+		try {
+			// eslint-disable-next-line no-eval
+			const solvedVal = eval(calculatorInput.replace(/×/g, '*'));
+			setCalculatorInput(solvedVal);
+		} catch (err) {
+			setCalculatorInput(errorMsg);
+		}
+
+		setClearNext(true);
+	};
+
+	/**
+	 * Clear the current calculator input
+	 * @param {Boolean=true} saveState - Whether or not to save the current state to the state queue.
+	 */
+	const clearInput = (saveState: boolean = true): void => {
+		if (saveState) {
+			addToQueue();
+		}
+		setCalculatorInput('');
 	};
 
 	return (
@@ -52,7 +98,7 @@ const Calculator: React.FC = (props) => {
 					<div id='operations-container' className='buttons-container'>
 						<CalculatorButton symbol='+' />
 						<CalculatorButton symbol='-' />
-						<CalculatorButton symbol='*' />
+						<CalculatorButton symbol='×' />
 						<CalculatorButton symbol='/' />
 						<CalculatorButton
 							symbol='='
@@ -67,17 +113,14 @@ const Calculator: React.FC = (props) => {
 						<CalculatorButton
 							symbol='C'
 							performs='action'
-							action={() => setCalculatorInput('')}
+							action={clearInput}
 						/>
 					</div>
 				</div>
 			</div>
 		</CalculatorContext.Provider>
 	);
-	//TODO: Replace '*' with an 'x' multiplication symbol
-	//TODO: back space button
-	//TODO: set length limit of input
-	//TODO: store queue in local storage
+	//TODO: Make decimal point bigger
 };
 
 export default Calculator;
