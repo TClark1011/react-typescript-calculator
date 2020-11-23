@@ -1,3 +1,3 @@
-type ButtonPerformance = 'input' | 'action';
+type ButtonPerformance = 'input' | 'action' | 'spacer';
 
 export default ButtonPerformance;

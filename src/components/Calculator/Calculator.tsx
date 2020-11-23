@@ -12,10 +12,7 @@ const Calculator: React.FC = (props) => {
 	const [stateQueue, setStateQueue] = useState<string[]>([]);
 
 	const revertToPreviousState = (): void => {
-		console.log('undoing!');
-		console.log('stateQueue before pop', stateQueue);
 		setCalculatorInput(stateQueue.pop() || '');
-		console.log('stateQueue after pop', stateQueue);
 	};
 
 	const enterInput = (newInput: string): void => {
@@ -24,7 +21,6 @@ const Calculator: React.FC = (props) => {
 
 	const performCalculation = (): void => {
 		setStateQueue([...stateQueue, calculatorInput]);
-		console.log('stateQueue', stateQueue);
 
 		// eslint-disable-next-line no-eval
 		setCalculatorInput(eval(calculatorInput));
@@ -40,20 +36,20 @@ const Calculator: React.FC = (props) => {
 					value={calculatorInput}
 				></input>
 				<div id='calculator-buttons-container'>
-					<div id='digits-container'>
-						<CalculatorButton symbol='0' />
-						<CalculatorButton symbol='1' />
-						<CalculatorButton symbol='2' />
-						<CalculatorButton symbol='3' />
-						<CalculatorButton symbol='4' />
-						<CalculatorButton symbol='5' />
-						<CalculatorButton symbol='6' />
+					<div id='digits-container' className='buttons-container'>
 						<CalculatorButton symbol='7' />
 						<CalculatorButton symbol='8' />
 						<CalculatorButton symbol='9' />
+						<CalculatorButton symbol='4' />
+						<CalculatorButton symbol='5' />
+						<CalculatorButton symbol='6' />
+						<CalculatorButton symbol='1' />
+						<CalculatorButton symbol='2' />
+						<CalculatorButton symbol='3' />
+						<CalculatorButton symbol='0' />
 						<CalculatorButton symbol='.' />
 					</div>
-					<div id='operations-container'>
+					<div id='operations-container' className='buttons-container'>
 						<CalculatorButton symbol='+' />
 						<CalculatorButton symbol='-' />
 						<CalculatorButton symbol='*' />
@@ -80,6 +76,8 @@ const Calculator: React.FC = (props) => {
 	);
 	//TODO: Replace '*' with an 'x' multiplication symbol
 	//TODO: back space button
+	//TODO: set length limit of input
+	//TODO: store queue in local storage
 };
 
 export default Calculator;
