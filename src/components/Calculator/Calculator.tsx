@@ -56,6 +56,7 @@ const Calculator: React.FC = (props) => {
 			setCalculatorInput(solvedVal);
 		} catch (err) {
 			setCalculatorInput(errorMsg);
+			setClearNext(true);
 		}
 	};
 
