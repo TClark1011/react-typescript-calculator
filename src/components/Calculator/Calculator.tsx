@@ -57,8 +57,6 @@ const Calculator: React.FC = (props) => {
 		} catch (err) {
 			setCalculatorInput(errorMsg);
 		}
-
-		setClearNext(true);
 	};
 
 	/**
@@ -137,7 +135,6 @@ const Calculator: React.FC = (props) => {
 			</div>
 		</CalculatorContext.Provider>
 	);
-	//TODO: Make decimal point bigger
 };
 
 export default Calculator;
