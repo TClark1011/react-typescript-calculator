@@ -83,38 +83,55 @@ const Calculator: React.FC = (props) => {
 				></input>
 				<div id='calculator-buttons-container'>
 					<div id='digits-container' className='buttons-container'>
-						<CalculatorButton symbol='7' />
-						<CalculatorButton symbol='8' />
-						<CalculatorButton symbol='9' />
-						<CalculatorButton symbol='4' />
-						<CalculatorButton symbol='5' />
-						<CalculatorButton symbol='6' />
-						<CalculatorButton symbol='1' />
-						<CalculatorButton symbol='2' />
-						<CalculatorButton symbol='3' />
-						<CalculatorButton symbol='0' />
-						<CalculatorButton symbol='.' />
+						<div className='row'>
+							<CalculatorButton symbol='7' />
+							<CalculatorButton symbol='8' />
+							<CalculatorButton symbol='9' />
+						</div>
+						<div className='row'>
+							<CalculatorButton symbol='4' />
+							<CalculatorButton symbol='5' />
+							<CalculatorButton symbol='6' />
+						</div>
+						<div className='row'>
+							<CalculatorButton symbol='1' />
+							<CalculatorButton symbol='2' />
+							<CalculatorButton symbol='3' />
+						</div>
+						<div className='row'>
+							<CalculatorButton symbol='0' spans={2} />
+							<CalculatorButton symbol='.' />
+						</div>
 					</div>
 					<div id='operations-container' className='buttons-container'>
-						<CalculatorButton symbol='+' />
-						<CalculatorButton symbol='-' />
-						<CalculatorButton symbol='×' />
-						<CalculatorButton symbol='/' />
-						<CalculatorButton
-							symbol='='
-							performs='action'
-							action={performCalculation}
-						/>
-						<CalculatorButton
-							symbol='U'
-							performs='action'
-							action={revertToPreviousState}
-						/>
-						<CalculatorButton
-							symbol='C'
-							performs='action'
-							action={clearInput}
-						/>
+						<div className='row'>
+							<CalculatorButton symbol='+' />
+							<CalculatorButton symbol='-' />
+						</div>
+						<div className='row'>
+							<CalculatorButton symbol='×' />
+							<CalculatorButton symbol='/' />
+						</div>
+						<div className='row'>
+							<CalculatorButton
+								symbol='U'
+								performs='action'
+								action={revertToPreviousState}
+							/>
+							<CalculatorButton
+								symbol='C'
+								performs='action'
+								action={clearInput}
+							/>
+						</div>
+						<div className='row'>
+							<CalculatorButton
+								symbol='='
+								performs='action'
+								action={performCalculation}
+								spans={2}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

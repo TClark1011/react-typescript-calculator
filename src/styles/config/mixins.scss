@@ -3,5 +3,22 @@
         content: "";
         display: block;
         padding-top: 100%;
+        width: 0;
+        height: 0;
     }
+}
+
+@function physicalEdge($thickness, $color) {
+    $shadows: 0 0 0 $color;
+
+    @for $i from 1px through $thickness {
+        $shadows: #{$shadows},
+        #{$i} #{$i} 0 #{$color};
+    }
+
+    @return $shadows;
+}
+
+@mixin edge($thickness, $color) {
+    box-shadow: physicalEdge($thickness, $color);
 }

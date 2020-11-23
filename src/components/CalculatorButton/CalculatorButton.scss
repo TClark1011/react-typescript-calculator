@@ -1,24 +1,28 @@
 @import "../../styles/config";
 
-
 .button-wrapper {
 
     $gap: $spacing-2;
 
-    flex: 1 0 calc(calc(100% / 3) - #{$gap * (2/3)});
-    flex-grow: 0;
-
-    margin-right: $gap;
-    margin-bottom: $gap;
-
-    &:nth-child(3n+3) {
-        margin-right: 0;
+    &:not(:last-child) {
+        margin-right: $gap;
     }
 
+    margin-bottom:$gap;
 
     display: flex;
 
-    @include squareOffHeight();
+    $size:50px;
+    width: $size;
+    height:$size;
+
+    &.spans-2 {
+        width: $size*2 + $gap;
+    }
+
+    &.spans-3 {
+        width: $size*3 + $gap*2;
+    }
 
     button {
         width: 100%;
@@ -32,20 +36,19 @@
 
         font-size: $fontSize-5;
 
-        transition: all 100ms ease-in-out;
+        transition: all 100ms linear;
 
-        $bgColor: grey;
+        $bgColor: #eee;
         background-color: $bgColor;
-
-        $edge-color: shade($bgColor, 50);
-
+        $edge-color: shade($bgColor, $edge-color-shade);
         $edge-thickness: $spacing-1;
-        box-shadow: 0 $spacing-1 $edge-color;
+
+        @include edge($edge-thickness, $edge-color);
 
         &:active {
             $depress: 2px;
-            transform: translateY($depress);
-            box-shadow: 0 ($edge-thickness - $depress) $edge-color;
+            transform: translateY($depress) translateX($depress);
+            @include edge($edge-thickness - $depress, $edge-color);
         }
     }
 }
