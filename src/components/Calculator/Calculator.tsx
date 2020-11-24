@@ -19,7 +19,7 @@ const Calculator: React.FC = (props) => {
 	 * @param {string} state - The state to save, if not provided, defaults to current contents of calculator display
 	 */
 	const addToQueue = (state: string = calculatorInput): void => {
-		if (calculatorInput !== errorMsg) {
+		if (state !== errorMsg) {
 			setStateQueue([...stateQueue, state]);
 		}
 	};
